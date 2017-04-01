@@ -2,22 +2,15 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>{{#block "title" }} SparkBlog {{/block}}</title>
-        <link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700|Noto+Sans:700,400' rel='stylesheet' type='text/css'>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/site.css">
-    </head>
+
     <body>
 
         <section>
             <div class="container">
                 <div class="entry-list">
                     {{#each posts}}
-                        <li>{{ title }}</li>
+                        <h2><a href="/detail/{{ slug }}">{{ title }}</a></h2>
+                        <time datetime="{{ creationDate }}"> {{ creationDate }}</time>
                     {{/each}}
                     <article>
                         <h2><a href="detail.html">The best day I’ve ever had</a></h2>
@@ -38,11 +31,5 @@
                 </div>
             </div>
         </section>
-        <footer>
-            <div>
-                <a href="#">Contact Us</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
-                <a href="#">Terms</a>
-            </div>
-        </footer>
     </body>
 </html>

@@ -1,5 +1,6 @@
 package com.teamtreehouse.blog.dao;
 
+import com.github.slugify.Slugify;
 import com.teamtreehouse.blog.model.BlogEntry;
 
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public class Blog implements BlogDao {
 
     @Override
     public BlogEntry findEntryBySlug(String slug) {
-        return null;
+        return (entries.stream()
+                .filter(entry -> entry.getSlug().equals(slug))
+                .findFirst()
+                .orElseThrow(NotFoundException::new));
     }
 }
