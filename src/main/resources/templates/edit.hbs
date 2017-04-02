@@ -7,11 +7,11 @@
             <div class="container">
                 <div class="edit-entry">
                     <h2>Edit Entry</h2>
-                    <form>
-                        <label for="title">{{ post.title }}</label>
-                        <input type="text" name="title"><br>
+                    <form action="/edit/{{ post.slug }}" method="post">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" value="{{ post.title }}"><br>
                         <label for="entry">Entry</label>
-                        <textarea rows="5" name="entry"></textarea>
+                        <textarea rows="5" name="entry">{{post.body }}</textarea>
                         <input type="submit" value="Save Entry" class="button">
                         <a href="#" class="button button-secondary">Cancel</a>
                     </form>

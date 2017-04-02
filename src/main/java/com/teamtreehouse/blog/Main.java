@@ -52,15 +52,22 @@ public class Main {
         return new ModelAndView(model, "detail.hbs");
         }, new HandlebarsTemplateEngine());
 
-        get("/detail/:post/edit", (req, res) ->{
+        get("/edit/:post", (req, res) ->{
             Map<String, Object> model = new HashMap<>();
             model.put("post", blog.findEntryBySlug(req.params("post")));
             return new ModelAndView(model, "edit.hbs");
         }, new HandlebarsTemplateEngine());
-        post("/detail/:post/edit", (req, res) -> {
+        post("/edit/:post", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("post", blog.findEntryBySlug(req.params("post")));
-
+            String title = req.queryParams("title");
+            String body = req.queryParams("entry");
+            BlogEntry postToEdit = blog.findEntryBySlug(req.params("post"));
+            System.out.println(postToEdit);
+            postToEdit.setBody(body);
+            postToEdit.setTitle(title);
+            
+            System.out.printf(postToEdit.getSlug() + "%n");
+            res.redirect("/detail/" + postToEdit.getSlug());
             return null;
         });
 //        post("/entries", (req,res) -> {

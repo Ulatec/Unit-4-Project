@@ -12,6 +12,16 @@ public class BlogEntry {
     private Date creationDate;
     private String slug;
 
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+        Slugify slugify = new Slugify();
+        slug = slugify.slugify(title);
+    }
+
     public BlogEntry(String title, String body, Date creationDate ){
         this.title = title;
         this.body = body;
