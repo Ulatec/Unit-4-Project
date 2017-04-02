@@ -51,6 +51,18 @@ public class Main {
             model.put("post", blog.findEntryBySlug(req.params("post")));
         return new ModelAndView(model, "detail.hbs");
         }, new HandlebarsTemplateEngine());
+
+        get("/detail/:post/edit", (req, res) ->{
+            Map<String, Object> model = new HashMap<>();
+            model.put("post", blog.findEntryBySlug(req.params("post")));
+            return new ModelAndView(model, "edit.hbs");
+        }, new HandlebarsTemplateEngine());
+        post("/detail/:post/edit", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("post", blog.findEntryBySlug(req.params("post")));
+
+            return null;
+        });
 //        post("/entries", (req,res) -> {
 //
 //        });
