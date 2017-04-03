@@ -2,6 +2,7 @@ package com.teamtreehouse.blog.model;
 
 import com.github.slugify.Slugify;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class BlogEntry {
     }
 
     public BlogEntry(String title, String body, Date creationDate ){
+        comments = new ArrayList<>();
         this.title = title;
         this.body = body;
         this.creationDate = creationDate;
@@ -32,6 +34,9 @@ public class BlogEntry {
     public boolean addComment(Comment comment) {
         // Store these comments!
         return comments.add(comment);
+    }
+    public List<Comment> getComments(){
+        return comments;
     }
 
     public String getBody() {

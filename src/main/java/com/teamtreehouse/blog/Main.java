@@ -2,6 +2,7 @@ package com.teamtreehouse.blog;
 
 import com.teamtreehouse.blog.dao.Blog;
 import com.teamtreehouse.blog.model.BlogEntry;
+import com.teamtreehouse.blog.model.Comment;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -9,9 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
-import static spark.Spark.staticFileLocation;
+import static spark.Spark.*;
 
 /**
  * Created by mark on 3/30/17.
@@ -19,6 +18,10 @@ import static spark.Spark.staticFileLocation;
 public class Main {
     public static void main(String[] args) {
         //get("/", (req,res) -> "Hello");
+
+        before((req, res)->{
+            
+        });
         staticFileLocation("/public");
         Blog blog = new Blog();
         blog.addEntry(new BlogEntry("this is a slug title", "content1", new Date()));
@@ -42,13 +45,10 @@ public class Main {
             res.redirect("/");
             return null;
         });
-//        post("/detail/:post", (req, res) -> {
-//            String slug =
-//            return null;
-//        });
         get("/detail/:post", (req, res) ->{
             Map<String, Object> model = new HashMap<>();
             model.put("post", blog.findEntryBySlug(req.params("post")));
+            model.put("comments", blog.findEntryBySlug(req.params("post")).getComments());
         return new ModelAndView(model, "detail.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -58,20 +58,22 @@ public class Main {
             return new ModelAndView(model, "edit.hbs");
         }, new HandlebarsTemplateEngine());
         post("/edit/:post", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             String title = req.queryParams("title");
             String body = req.queryParams("entry");
             BlogEntry postToEdit = blog.findEntryBySlug(req.params("post"));
-            System.out.println(postToEdit);
             postToEdit.setBody(body);
             postToEdit.setTitle(title);
-            
-            System.out.printf(postToEdit.getSlug() + "%n");
             res.redirect("/detail/" + postToEdit.getSlug());
             return null;
         });
-//        post("/entries", (req,res) -> {
-//
-//        });
+        post("/detail/:post/comment", (req,res) -> {
+            String name = req.queryParams("name");
+            String comment = req.queryParams("comment");
+            BlogEntry postToEdit = blog.findEntryBySlug(req.params("post"));
+            System.out.printf(postToEdit + " " + name + " " + comment);
+            postToEdit.addComment(new Comment(name, comment, new Date()));
+            res.redirect("/detail/" + postToEdit.getSlug());
+            return null;
+        });
     }
 }
