@@ -14,7 +14,9 @@
                         <textarea rows="5" name="entry">{{post.body }}</textarea>
                         <input type="submit" value="Save Entry" class="button">
                         <a href="#" class="button button-secondary">Cancel</a>
+
                     </form>
+                    <form action="/edit/{{ post.slug }}/delete" method="post"><input type="submit" class="button" value="Delete"></form>
                 </div>
             </div>
         </section>

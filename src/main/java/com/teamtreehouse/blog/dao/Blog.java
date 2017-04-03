@@ -4,6 +4,7 @@ import com.github.slugify.Slugify;
 import com.teamtreehouse.blog.model.BlogEntry;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,7 +17,12 @@ public class Blog implements BlogDao {
     }
     @Override
     public boolean addEntry(BlogEntry blogEntry) {
-        return entries.add(blogEntry);
+        boolean result = entries.add(blogEntry);
+        Collections.reverse(entries);
+        for(BlogEntry entry : findAllEntries()){
+            System.out.printf(entry + "%n");
+        }
+        return result;
     }
 
     @Override
@@ -30,5 +36,10 @@ public class Blog implements BlogDao {
                 .filter(entry -> entry.getSlug().equals(slug))
                 .findFirst()
                 .orElseThrow(NotFoundException::new));
+    }
+
+    @Override
+    public boolean delete(BlogEntry blogEntry) {
+        return entries.remove(blogEntry);
     }
 }

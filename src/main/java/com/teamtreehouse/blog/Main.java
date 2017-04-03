@@ -18,11 +18,28 @@ import static spark.Spark.*;
 public class Main {
     public static void main(String[] args) {
         //get("/", (req,res) -> "Hello");
-
-        before((req, res)->{
-            
-        });
         staticFileLocation("/public");
+        before((req, res)->{
+            if(req.cookie("username") !=null){
+                req.attribute("username", req.cookie("username"));
+            }
+        });
+        before("/new", (req, res) -> {
+            if(!req.session().attributes().contains("IS_ADMIN")){
+                System.out.printf("Not admin %n");
+                res.redirect("/password");
+                halt();
+            }
+        });
+        before("/edit/:post", (req, res) -> {
+            if(!req.session().attributes().contains("IS_ADMIN")){
+                System.out.printf("Not admin %n");
+                res.redirect("/password");
+                halt();
+            }
+        });
+
+
         Blog blog = new Blog();
         blog.addEntry(new BlogEntry("this is a slug title", "content1", new Date()));
         blog.addEntry(new BlogEntry("test title is lame", "content2", new Date()));
@@ -66,6 +83,13 @@ public class Main {
             res.redirect("/detail/" + postToEdit.getSlug());
             return null;
         });
+        post("/edit/:post/delete", (req, res) ->{
+            System.out.printf("Delete Triggerd %n");
+            BlogEntry postToEdit = blog.findEntryBySlug(req.params("post"));
+            blog.delete(postToEdit);
+            res.redirect("/");
+            return null;
+        });
         post("/detail/:post/comment", (req,res) -> {
             String name = req.queryParams("name");
             String comment = req.queryParams("comment");
@@ -74,6 +98,22 @@ public class Main {
             postToEdit.addComment(new Comment(name, comment, new Date()));
             res.redirect("/detail/" + postToEdit.getSlug());
             return null;
+        });
+        get("/password", (req, res) ->{
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "password.hbs");
+        }, new HandlebarsTemplateEngine());
+        post("/password", (req,res) ->{
+            String password = req.queryParams("password");
+            if(password.equals("admin")){
+                req.session().attribute("IS_ADMIN", true);
+                System.out.printf("is now admin %n");
+                res.redirect("/");
+            }else{
+                System.out.printf("admin password rejected. %n");
+                res.redirect("/password");
+            }
+           return null;
         });
     }
 }

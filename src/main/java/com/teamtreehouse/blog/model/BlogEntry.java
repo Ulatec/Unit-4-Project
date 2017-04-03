@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class BlogEntry {
+public class BlogEntry implements Comparable<BlogEntry> {
     private List<Comment> comments;
     private String body;
     private String title;
@@ -57,5 +57,31 @@ public class BlogEntry {
     @Override
     public String toString(){
         return body + " - Created on: " + creationDate;
+    }
+    @Override
+    public int compareTo(BlogEntry other){
+        if(equals(other)){
+            return 0;
+        }
+
+        int dateCmp = creationDate.compareTo(other.creationDate);
+        if(dateCmp == 0){
+            return slug.compareTo(other.slug);
+        }
+
+        return dateCmp;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BlogEntry)) return false;
+
+        BlogEntry entry = (BlogEntry) o;
+
+        if (comments != entry.comments) return false;
+        if (body != entry.body) return false;
+        if (!title.equals(entry.title)) return false;
+        return creationDate.equals(entry.creationDate);
+
     }
 }
