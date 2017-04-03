@@ -26,16 +26,26 @@ public class Main {
         });
         before("/new", (req, res) -> {
             if(!req.session().attributes().contains("IS_ADMIN")){
+                req.session().attribute("IS_ADMIN", false);
                 System.out.printf("Not admin %n");
                 res.redirect("/password");
                 halt();
             }
         });
         before("/edit/:post", (req, res) -> {
+
             if(!req.session().attributes().contains("IS_ADMIN")){
+                req.session().attribute("IS_ADMIN", false);
                 System.out.printf("Not admin %n");
                 res.redirect("/password");
                 halt();
+            }else{
+                if(req.session().attribute("IS_ADMIN").equals(true)){
+                    System.out.printf("IS ALREADY admin %n");
+                }else{
+                    System.out.printf("Not admin %n");
+                    res.redirect("/password");
+                }
             }
         });
 
