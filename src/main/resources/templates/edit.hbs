@@ -1,8 +1,6 @@
-{{> base.hbs}}
 
-<!DOCTYPE html>
-<html>
-    <body>
+
+{{#partial "content"}}
         <section>
             <div class="container">
                 <div class="edit-entry">
@@ -20,5 +18,6 @@
                 </div>
             </div>
         </section>
-    </body>
-</html>
+{{/partial }}
+
+{{> base.hbs}}

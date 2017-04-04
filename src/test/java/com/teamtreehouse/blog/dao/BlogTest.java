@@ -22,23 +22,13 @@ public class BlogTest {
     public void addEntry() throws Exception {
         BlogEntry newEntry = new BlogEntry("first entry", "This is my first blog entry.", new Date());
         blog.addEntry(newEntry);
-        System.out.print(newEntry);
     }
     @Test
     public void addComment() throws Exception {
         BlogEntry newEntry = new BlogEntry("first entry", "This is my first blog entry.", new Date());
         blog.addEntry(newEntry);
-        newEntry.addComment(new Comment("me", "This is my comment"));
+        newEntry.addComment(new Comment("me", "This is my comment", new Date()));
     }
 
-//    @Test
-//    public void findAllEntries() throws Exception {
-//
-//    }
-//
-//    @Test
-//    public void findEntryBySlug() throws Exception {
-//
-//    }
 
 }

@@ -32,7 +32,6 @@ public class BlogEntry implements Comparable<BlogEntry> {
         slug = slugify.slugify(title);
     }
     public boolean addComment(Comment comment) {
-        // Store these comments!
         return comments.add(comment);
     }
     public List<Comment> getComments(){

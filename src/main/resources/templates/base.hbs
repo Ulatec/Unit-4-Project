@@ -1,4 +1,7 @@
 {{#block "header"}}
+    <!DOCTYPE html>
+    <html>
+    <body>
     <header>
         <div class="container">
             <div class="site-header">
@@ -8,14 +11,6 @@
         </div>
     </header>
 {{/block}}
-{{#block "footer" }}
-    <footer>
-        <div>
-            <a href="#">Contact Us</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
-            <a href="#">Terms</a>
-        </div>
-    </footer>
-{{/block}}
 {{#block "head"}}
     <head>
         <meta charset="utf-8">
@@ -23,7 +18,21 @@
         <title>{{#block "title" }} SparkBlog {{/block}}</title>
         <link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700|Noto+Sans:700,400' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="../css/normalize.css">
-        <link rel="stylesheet" href="../css/site.css">
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/site.css">
     </head>
+{{/block}}
+
+
+{{#block "content"}}{{/block}}
+
+{{#block "footer"}}
+    <footer>
+        <div>
+            <a href="#">Contact Us</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="#">Terms</a>
+        </div>
+    </footer>
+    </body>
+    </html>
 {{/block}}
